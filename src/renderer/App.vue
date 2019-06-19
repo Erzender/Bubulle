@@ -26,7 +26,18 @@ export default {
     route: "landing",
     core: {
       bulletins: {},
-      pupils: {},
+      pupils: [
+        {
+          firstname: "Jacques",
+          lastname: "Fouf",
+          tags: ["2018 petits"]
+        },
+        {
+          firstname: "Bob",
+          lastname: "Lennon",
+          tags: ["2018 petits"]
+        }
+      ],
       skills: [{ name: "Test", list: [{ name: "Skill" }] }]
     }
   }),
