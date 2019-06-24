@@ -16,7 +16,7 @@
       <button
         v-on:click="() => editPupil(pupil.id)"
       >Modifier</button>
-      <button>Supprimer</button>
+      <button v-on:click="() => removePupil(pupil.id)">Supprimer</button>
     </div>
     <h1>{{inputTitle}}</h1>
     <input v-model="input.lastname" placeholder="Nom">
@@ -115,6 +115,9 @@ export default {
         tags: this.core.pupils[id].tags.slice(),
         newtag: ""
       };
+    },
+    removePupil(id) {
+      this.dispatch({ type: "REMOVE_PUPIL", id });
     },
     removeFilter(key) {
       this.filters.splice(key, 1);

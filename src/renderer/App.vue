@@ -71,13 +71,15 @@ export default {
             tags: action.pupil.tags
           });
         case "EDIT_PUPIL":
-          console.log(this.core.pupils[action.pupil.id])
+          console.log(this.core.pupils[action.pupil.id]);
           this.core.pupils.splice(action.pupil.id, 1);
           return this.core.pupils.push({
             firstname: action.pupil.firstname,
             lastname: action.pupil.lastname,
             tags: action.pupil.tags
           });
+        case "REMOVE_PUPIL":
+          return this.core.pupils.splice(action.id, 1);
         default:
           break;
       }
