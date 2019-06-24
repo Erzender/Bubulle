@@ -27,7 +27,7 @@
     </span>
     <input v-model="input.newtag" placeholder="Ajouter classe">
     <button v-on:click="addPupilTag">+</button>
-    <button>{{inputTitle}}</button>
+    <button v-on:click="validate">{{inputTitle}}</button>
     <button v-on:click="inputUndo">Annuler</button>
   </div>
 </template>
@@ -84,13 +84,18 @@ export default {
   },
   methods: {
     validate() {
-      if (!this.editing) {
+      if (this.editing < 0) {
         this.dispatch({
           type: "ADD_PUPIL",
-          pupil: { ...this.input, newtag: undefined }
+          pupil: { ...this.input }
         });
-        this.input = { firstname: "", lastname: "", tags: [], newtag: "" };
+      } else {
+        this.dispatch({
+          type: "EDIT_PUPIL",
+          pupil: { ...this.input, id: this.editing }
+        });
       }
+      this.input = { firstname: "", lastname: "", tags: [], newtag: "" };
     },
     addPupilTag() {
       this.input.tags.push(this.input.newtag);

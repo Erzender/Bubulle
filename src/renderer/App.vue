@@ -64,6 +64,20 @@ export default {
           return this.core.skills.splice(action.key, 1);
         case "ADD_CATEGORY":
           return this.core.skills.push({ ...action.category, list: [] });
+        case "ADD_PUPIL":
+          return this.core.pupils.push({
+            firstname: action.pupil.firstname,
+            lastname: action.pupil.lastname,
+            tags: action.pupil.tags
+          });
+        case "EDIT_PUPIL":
+          console.log(this.core.pupils[action.pupil.id])
+          this.core.pupils.splice(action.pupil.id, 1);
+          return this.core.pupils.push({
+            firstname: action.pupil.firstname,
+            lastname: action.pupil.lastname,
+            tags: action.pupil.tags
+          });
         default:
           break;
       }
