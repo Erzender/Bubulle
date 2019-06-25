@@ -25,20 +25,21 @@ export default {
     hello: "bonjour",
     route: "landing",
     core: {
-      bulletins: {},
       pupils: [
         {
           firstname: "Jacques",
           lastname: "Fouf",
-          tags: ["2018 petits"]
+          tags: ["2018 petits"],
+          skills: [{ cat: "1", num: "a" }]
         },
         {
           firstname: "Bob",
           lastname: "Lennon",
-          tags: ["2018 petits"]
+          tags: ["2018 petits"],
+          skills: []
         }
       ],
-      skills: [{ name: "Test", list: [{ name: "Skill" }] }]
+      skills: [{ num: "1", name: "Test", list: [{ num: "a", name: "Skill" }] }]
     }
   }),
   components: {
@@ -68,18 +69,33 @@ export default {
           return this.core.pupils.push({
             firstname: action.pupil.firstname,
             lastname: action.pupil.lastname,
-            tags: action.pupil.tags
+            tags: action.pupil.tags,
+            skills: []
           });
         case "EDIT_PUPIL":
-          console.log(this.core.pupils[action.pupil.id]);
+          let skills = this.core.pupils[action.pupil.id];
           this.core.pupils.splice(action.pupil.id, 1);
           return this.core.pupils.push({
             firstname: action.pupil.firstname,
             lastname: action.pupil.lastname,
-            tags: action.pupil.tags
+            tags: action.pupil.tags,
+            skills: skills
           });
         case "REMOVE_PUPIL":
           return this.core.pupils.splice(action.id, 1);
+        case "TOGGLE_PUPIL_SKILL":
+          let inList = this.core.pupils[action.pupil].skills.findIndex(
+            skill => skill.cat === action.category && skill.num === action.skill
+          );
+          if (inList >= 0) {
+            this.core.pupils[action.pupil].skills.splice(inList, 1);
+          } else {
+            this.core.pupils[action.pupil].skills.push({
+              cat: action.category,
+              num: action.skill
+            });
+          }
+          return;
         default:
           break;
       }
