@@ -17,7 +17,7 @@
         v-on:click="() => selectPupil(pupil.id)"
       >Sélectionner</button>
     </div>
-    <h1>Elève sélectionné</h1>
+    <h1>Élève sélectionné</h1>
     <div v-if="selectedPupil !== null">
       {{pupilInfo.lastname}} {{pupilInfo.firstname}} {{pupilInfo.tags}}
       <div v-for="cat in skillList" :key="'cat' + cat.num">
@@ -31,12 +31,13 @@
           >
         </div>
       </div>
+      <button v-on:click="bulletinGenerate">Générer le bulletin</button>
     </div>
   </div>
 </template>
 
 <script>
-import convert from "xml-js";
+import { generateMD } from "../utils/bulletinRenderer";
 
 export default {
   name: "bulletins-page",
@@ -106,6 +107,9 @@ export default {
     }
   },
   methods: {
+    bulletinGenerate() {
+      generateMD(this.core, this.selectedPupil);
+    },
     checkSkill(cat, num) {
       this.dispatch({
         type: "TOGGLE_PUPIL_SKILL",
